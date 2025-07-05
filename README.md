@@ -3,7 +3,6 @@
 A **szamlazz4j** a SzámlaAgent API Java nyelvű wrapperje.  
 A projekt függetlenül működik a Számlázz.hu-tól.
 
----
 
 ## Áttekintés
 
