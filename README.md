@@ -1,7 +1,4 @@
-# szamlazz4j 
-![Maven metadata URL](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fhu%2Fgigsystem%2Fszamlazz4j%2Fcore%2Fmaven-metadata.xml&style=for-the-badge) ![GitHub License](https://img.shields.io/github/license/GigSystem/szamlazz4j?style=for-the-badge)
-
-
+# szamlazz4j ![Maven metadata URL](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fhu%2Fgigsystem%2Fszamlazz4j%2Fcore%2Fmaven-metadata.xml) ![GitHub License](https://img.shields.io/github/license/GigSystem/szamlazz4j)
 
 A **szamlazz4j** a SzámlaAgent API Java nyelvű wrapperje.  
 A projekt függetlenül működik a Számlázz.hu-tól.
