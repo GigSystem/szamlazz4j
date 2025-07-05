@@ -54,6 +54,34 @@ A modulok szabadon kombinálhatók az igények szerint.
 > [!IMPORTANT]  
 > A transport modulok önmagukban nem tartalmazzák az általuk implementált klienst. Tehát a például a projektbe az okhttp-t a fejlesztőnek kell hozzáadnia!
 
+
+Jelenleg a projekt tesztüzemként működik, és csak a snapshot repository-ról érhető el:
+```kotlin
+repositories {
+  maven {
+    name = "Central Portal Snapshots"
+    url = URI("https://central.sonatype.com/repository/maven-snapshots/")
+  }
+  mavenCentral()
+}
+```
+
+```xml
+<repositories>
+  <repository>
+    <name>Central Portal Snapshots</name>
+    <id>central-portal-snapshots</id>
+    <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+    <releases>
+      <enabled>false</enabled>
+    </releases>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </repository>
+</repositories>
+```
+
 ### Gradle (Kotlin DSL)
 ```kotlin
 implementation("hu.gigsystem.szamlazz4j:core:<verzió>")
