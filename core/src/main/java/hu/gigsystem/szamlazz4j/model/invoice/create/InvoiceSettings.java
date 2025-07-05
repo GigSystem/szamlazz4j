@@ -80,6 +80,9 @@ public class InvoiceSettings {
     @JacksonXmlProperty(localName = "cikkazoninvoice", namespace = "http://www.szamlazz.hu/xmlszamla")
     private Boolean commodityIdInvoice;
 
+    @JacksonXmlProperty(localName = "szamlaKulsoAzon", namespace = "http://www.szamlazz.hu/xmlszamla")
+    private String externalId;
+
     /**
      * Copies authentication data from the given {@link SzamlaAgent} into this settings instance.
      *
