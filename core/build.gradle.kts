@@ -1,11 +1,18 @@
+import net.thebugmc.gradle.sonatypepublisher.PublishingType
+import org.gradle.kotlin.dsl.signing
+import java.util.Base64
+
 plugins {
     java
-    id("com.vanniktech.maven.publish") version "0.33.0"
+    signing
+    id("net.thebugmc.gradle.sonatype-central-portal-publisher") version "1.2.4"
 }
 
 repositories {
     mavenCentral()
 }
+
+
 
 val jacksonVersion = "2.19.1"
 val lombok = "1.18.38"
@@ -38,11 +45,18 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
-mavenPublishing {
-    publishToMavenCentral()
-    signAllPublications()
+signing {
+    val password: String? = findProperty("gsSigning.password") as? String
+    val secretKey: String? = findProperty("gsSigning.secretKey") as? String
+    println("password = ${if (password.isNullOrBlank()) "null or blank" else "set"}")
+    println("secretKey = ${if (secretKey.isNullOrBlank()) "null or blank" else "set"}")
+    useInMemoryPgpKeys(String(Base64.getDecoder().decode(secretKey)), password)
+    sign(publishing.publications["centralPortal"])
+}
 
-    coordinates("hu.gigsystem.szamlazz4j", "core", project.version.toString())
+centralPortal {
+    name = "core"
+    publishingType = PublishingType.USER_MANAGED
     pom {
         name.set("Szamlazz4j Core")
         description.set("Core of the szamlazz4j project. This module does not contain any transport options!")
@@ -51,9 +65,20 @@ mavenPublishing {
         licenses {
             license {
                 name.set("The Apache License, Version 2.0")
-                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                url.set("https://github.com/GigSystem/szamlazz4j/blob/master/LICENSE")
                 distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
             }
+        }
+        developers {
+            developer {
+                id.set("totht0mi")
+                name.set("Tamás Tóth")
+                url.set("https://github.com/TOTHT0MI")
+            }
+        }
+        scm {
+            url.set("https://github.com/GigSystem/szamlazz4j")
+            connection.set("scm:git:git://github.com/GigSystem/szamlazz4j.git")
         }
     }
 }
