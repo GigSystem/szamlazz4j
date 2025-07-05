@@ -4,16 +4,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import hu.gigsystem.szamlazz4j.SzamlaAgent;
 import hu.gigsystem.szamlazz4j.model.BaseRequest;
-import hu.gigsystem.szamlazz4j.model.BaseResponse;
+import hu.gigsystem.szamlazz4j.model.invoice.XmlInvoiceResponse;
 import lombok.Builder;
-import lombok.Getter;
-
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.Base64;
 
 /**
  * Represents a request to generate or retrieve a PDF version of an invoice
@@ -30,7 +22,7 @@ import java.util.Base64;
  */
 @Builder
 @JacksonXmlRootElement(localName = "xmlszamlapdf", namespace = "http://www.szamlazz.hu/xmlszamlapdf")
-public class InvoicePdfQueryRequest extends BaseRequest<InvoicePdfQueryRequest.Response> {
+public class InvoicePdfQueryRequest extends BaseRequest<XmlInvoiceResponse> {
 
     /**
      * The response version to be used, must always be 2.
@@ -93,76 +85,5 @@ public class InvoicePdfQueryRequest extends BaseRequest<InvoicePdfQueryRequest.R
         this.key = agent.getKey();
         this.username = agent.getUsername();
         this.password = agent.getPassword();
-    }
-
-    /**
-     * Represents the response returned from the Számlázz.hu API
-     * for the invoice PDF request.
-     */
-    @Getter
-    @JacksonXmlRootElement(localName = "xmlszamlavalasz", namespace = "http://www.szamlazz.hu/xmlszamlavalasz")
-    static class Response extends BaseResponse {
-
-        /**
-         * The order number related to the invoice.
-         */
-        @JacksonXmlProperty(localName = "szamlaszam")
-        private String orderNumber;
-
-        /**
-         * The net price of the invoice.
-         */
-        @JacksonXmlProperty(localName = "szamlanetto")
-        private Double netPrice;
-
-        /**
-         * The total gross price of the invoice.
-         */
-        @JacksonXmlProperty(localName = "szamlabrutto")
-        private Double totalPrice;
-
-        /**
-         * The amount receivable.
-         */
-        @JacksonXmlProperty(localName = "kintlevoseg")
-        private Double receivable;
-
-        /**
-         * URL to the buyer's account information.
-         */
-        @JacksonXmlProperty(localName = "vevoifiokurl")
-        private String buyerAccountUrl;
-
-        /**
-         * The invoice PDF encoded as a Base64 string.
-         */
-        @JacksonXmlProperty(localName = "pdf")
-        private String pdf;
-
-        /**
-         * Decodes the Base64 encoded PDF string into a byte array.
-         *
-         * @return decoded PDF data as bytes
-         * @throws IllegalStateException if the PDF string is null or empty
-         */
-        public byte[] getDecodedPdf() {
-            if (pdf == null || pdf.isEmpty()) {
-                throw new IllegalStateException("Cannot write invoice PDF, due to PDF being null or empty!");
-            }
-            return Base64.getDecoder().decode(pdf);
-        }
-
-        /**
-         * Writes the decoded PDF to the specified output file.
-         *
-         * @param output the path to write the PDF file to
-         * @throws IOException if an I/O error occurs writing the file
-         */
-        public void writePdfToFile(Path output) throws IOException {
-            byte[] pdfData = getDecodedPdf();
-            try (BufferedOutputStream out = new BufferedOutputStream(Files.newOutputStream(output, StandardOpenOption.CREATE_NEW))) {
-                out.write(pdfData, 0, pdfData.length);
-            }
-        }
     }
 }
