@@ -1,7 +1,6 @@
 # szamlazz4j ![Maven metadata URL](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2Fhu%2Fgigsystem%2Fszamlazz4j%2Fcore%2Fmaven-metadata.xml) ![GitHub License](https://img.shields.io/github/license/GigSystem/szamlazz4j)
 
-A **szamlazz4j** a SzámlaAgent API Java nyelvű wrapperje.  
-A projekt függetlenül működik a Számlázz.hu-tól.
+A **szamlazz4j** a SzámlaAgent API nem hivatalos Java nyelvű wrapperje. A wrapper eredetileg egy zárt rendszer része volt, így jelenleg egyes funkciók nem támogatottak!
 
 
 ## Áttekintés
@@ -46,25 +45,34 @@ A maximális rugalmasság érdekében a szamlazz4j több modulból áll, így k�
 - **transport-resttemplate** — Spring RestTemplate implementáció
 - **transport-okhttp** — OkHttp implementáció
 
-A modulok szabadon kombinálhatók az igények szerint.
-
 ## Telepítés
 
 > [!IMPORTANT]  
-> A transport modulok önmagukban nem tartalmazzák az általuk implementált klienst. Tehát a például a projektbe az okhttp-t a fejlesztőnek kell hozzáadnia!
+> A transport modulok önmagukban nem tartalmazzák az általuk implementált klienst.
 
 
-Jelenleg a projekt tesztüzemként működik, és csak a snapshot repository-ról érhető el:
+A projekt jelenleg tesztüzemben működik, így jelenleg csak snapshot-ként érhető el. Amint a wrapper stabilnak bizonyul saját környezetünkben, úgy publikálni fogjuk a maven-central-ra!
+
+### Gradle (Kotlin DSL)
 ```kotlin
 repositories {
-  maven {
-    name = "Central Portal Snapshots"
-    url = URI("https://central.sonatype.com/repository/maven-snapshots/")
-  }
-  mavenCentral()
+    maven {
+        name = "Central Portal Snapshots"
+        url = URI("https://central.sonatype.com/repository/maven-snapshots/")
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation("hu.gigsystem.szamlazz4j:core:<verzió>")
+
+    // Opcionális transport modulok
+    implementation("hu.gigsystem.szamlazz4j:transport-resttemplate:<verzió>")
+    implementation("hu.gigsystem.szamlazz4j:transport-okhttp:<verzió>")
 }
 ```
 
+### Maven
 ```xml
 <repositories>
   <repository>
@@ -79,37 +87,27 @@ repositories {
     </snapshots>
   </repository>
 </repositories>
-```
 
-### Gradle (Kotlin DSL)
-```kotlin
-implementation("hu.gigsystem.szamlazz4j:core:<verzió>")
+<dependencies>
+    <dependency>
+        <groupId>hu.gigsystem.szamlazz4j</groupId>
+        <artifactId>core</artifactId>
+        <version>verzió</version>
+    </dependency>
 
-// Opcionális transport modulok
-implementation("hu.gigsystem.szamlazz4j:transport-resttemplate:<verzió>")
-implementation("hu.gigsystem.szamlazz4j:transport-okhttp:<verzió>")
-```
+    <!-- Opcionális transport modulok -->
+    <dependency>
+        <groupId>hu.gigsystem.szamlazz4j</groupId>
+        <artifactId>transport-resttemplate</artifactId>
+        <version>verzió</version>
+    </dependency>
 
-### Maven
-```xml
-<dependency>
-    <groupId>hu.gigsystem.szamlazz4j</groupId>
-    <artifactId>core</artifactId>
-    <version>&lt;verzió&gt;</version>
-</dependency>
-
-<!-- Opcionális transport modulok -->
-<dependency>
-    <groupId>hu.gigsystem.szamlazz4j</groupId>
-    <artifactId>transport-resttemplate</artifactId>
-    <version>&lt;verzió&gt;</version>
-</dependency>
-
-<dependency>
-    <groupId>hu.gigsystem.szamlazz4j</groupId>
-    <artifactId>transport-okhttp</artifactId>
-    <version>&lt;verzió&gt;</version>
-</dependency>
+    <dependency>
+        <groupId>hu.gigsystem.szamlazz4j</groupId>
+        <artifactId>transport-okhttp</artifactId>
+        <version>verzió</version>
+    </dependency>
+</dependencies>
 ```
 ## Használat
 A kódban legyen egy újrahasznált SzamlaAgent kliens:
