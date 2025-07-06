@@ -19,13 +19,6 @@ import lombok.Builder;
 public class CancelSettings {
 
     /**
-     * The version of the response expected from the API.
-     * Must be {@code 2}.
-     */
-    @Builder.Default
-    @JacksonXmlProperty(localName = "valaszVerzio", namespace = "http://www.szamlazz.hu/xmlszamlast")
-    private final Integer answerType = 2;
-    /**
      * Username for authentication.
      */
     @JacksonXmlProperty(localName = "felhasznalo", namespace = "http://www.szamlazz.hu/xmlszamlast")
@@ -69,6 +62,15 @@ public class CancelSettings {
      */
     @JacksonXmlProperty(localName = "guardian", namespace = "http://www.szamlazz.hu/xmlszamlast")
     private Boolean guardian;
+
+    /**
+     * The version of the response expected from the API.
+     * Must be {@code 2}.
+     */
+    @Builder.Default
+    @JacksonXmlProperty(localName = "valaszVerzio", namespace = "http://www.szamlazz.hu/xmlszamlast")
+    private final Integer answerType = 2;
+
     /**
      * The external id of the invoice.
      */

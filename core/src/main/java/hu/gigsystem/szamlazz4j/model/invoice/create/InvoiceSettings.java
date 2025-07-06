@@ -22,13 +22,6 @@ import lombok.Builder;
 public class InvoiceSettings {
 
     /**
-     * The version of the response expected from the API.
-     * Must be {@code 2}.
-     */
-    @Builder.Default
-    @JacksonXmlProperty(localName = "valaszVerzio", namespace = "http://www.szamlazz.hu/xmlszamla")
-    private final Integer answerType = 2;
-    /**
      * The API key used for authentication.
      */
     @JacksonXmlProperty(localName = "szamlaagentkulcs", namespace = "http://www.szamlazz.hu/xmlszamla")
@@ -62,6 +55,15 @@ public class InvoiceSettings {
      */
     @JacksonXmlProperty(localName = "szamlaLetoltesPld", namespace = "http://www.szamlazz.hu/xmlszamla")
     private Integer downloadInvoiceNumber;
+
+    /**
+     * The version of the response expected from the API.
+     * Must be {@code 2}.
+     */
+    @Builder.Default
+    @JacksonXmlProperty(localName = "valaszVerzio", namespace = "http://www.szamlazz.hu/xmlszamla")
+    private final Integer answerType = 2;
+
     /**
      * Optional aggregator identifier, if used.
      */

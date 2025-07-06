@@ -25,11 +25,6 @@ import lombok.Builder;
 public class InvoicePdfQueryRequest extends BaseRequest<XmlInvoiceResponse> {
 
     /**
-     * The response version to be used, must always be 2.
-     */
-    @JacksonXmlProperty(localName = "valaszVerzio", namespace = "http://www.szamlazz.hu/xmlszamlapdf")
-    private final Integer responseVersion = 2;
-    /**
      * The agent key for authenticating with the Számlázz.hu API.
      */
     @JacksonXmlProperty(localName = "szamlaagentkulcs", namespace = "http://www.szamlazz.hu/xmlszamlapdf")
@@ -49,6 +44,13 @@ public class InvoicePdfQueryRequest extends BaseRequest<XmlInvoiceResponse> {
      */
     @JacksonXmlProperty(localName = "szamlaszam", namespace = "http://www.szamlazz.hu/xmlszamlapdf")
     private String invoiceNumber;
+
+    /**
+     * The response version to be used, must always be 2.
+     */
+    @JacksonXmlProperty(localName = "valaszVerzio", namespace = "http://www.szamlazz.hu/xmlszamlapdf")
+    private final Integer responseVersion = 2;
+
     /**
      * Optional order number associated with the invoice.
      */
