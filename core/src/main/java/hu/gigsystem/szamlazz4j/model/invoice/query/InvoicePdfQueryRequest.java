@@ -71,7 +71,7 @@ public class InvoicePdfQueryRequest extends BaseRequest<XmlInvoiceResponse> {
      * @param invoiceExternalId the external invoice ID (optional)
      */
     public InvoicePdfQueryRequest(String keyIgnored, String usernameIgnored, String passwordIgnored, String invoiceNumber, String orderNumber, String invoiceExternalId) {
-        super("szamla_agent_pdf", "xmlszamlapdf.xml");
+        super("action-szamla_agent_pdf", "xmlszamlapdf.xml");
         this.invoiceNumber = invoiceNumber;
         this.orderNumber = orderNumber;
         this.invoiceExternalId = invoiceExternalId;

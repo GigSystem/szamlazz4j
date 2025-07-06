@@ -5,6 +5,7 @@ plugins {
     java
     signing
     `maven-publish`
+    kotlin("jvm")
 }
 
 repositories {
@@ -38,6 +39,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("ch.qos.logback:logback-classic:$logback")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 tasks.named<Test>("test") {
@@ -97,4 +99,7 @@ signing {
     println("secretKey = ${if (secretKey.isNullOrBlank()) "null or blank" else "set"}")
     useInMemoryPgpKeys(String(Base64.getDecoder().decode(secretKey)), password)
     sign(publishing.publications["mavenJava"])
+}
+kotlin {
+    jvmToolchain(21)
 }
